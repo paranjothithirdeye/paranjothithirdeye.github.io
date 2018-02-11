@@ -28,6 +28,19 @@ File: Layout CSS
 #header #logo h1{margin:0; padding:0; font-size:22px;}
 #header #logo img{height: 35px;}
 
+/* Language Selector
+--------------------------------------------------------------------------------------------------------------- */
+#lang {width: 75px;text-align: left; padding: 5px;margin-top: 10px; margin-left: 10px;}
+#lang a {color: inherit}
+.inline-space {display: inline;}
+@media screen and (max-width:900px){
+    #lang {margin-top: 0px; }
+}
+@media screen and (max-width:750px){
+    #lang {width : 100%; text-align: center;}
+    .inline-space {display: inline-block;width:50px;height:1px;}
+}
+
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
