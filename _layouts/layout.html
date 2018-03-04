@@ -1,0 +1,348 @@
+
+{% if page.base != null %}
+	{% assign base = page.base %}
+{% else %}
+	{% assign base = "../.." %}
+{% endif %}
+
+
+{% if page.pageurl != null %}
+	{% assign pageurl = page.pageurl %}
+{% else %}
+	{% assign pageurl = page.url %}
+{% endif %}
+
+{% assign tilde = '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' %}
+{% capture arr %}{{ pageurl | replace_first:'/','' | replace:'/',tilde | replace_first:'.html','' }}{% endcapture %}
+{% capture lang %}{{ arr | truncate:2, ''}}{%endcapture%}
+{% capture langTilde %}{{lang}}{{tilde}}{%endcapture%}
+{% capture maintopic %}{{ arr | replace_first:langTilde, '' | truncate:50, '' | replace:'~','' }}{%endcapture%}
+{% capture subtopic %}{{ arr | replace_first:langTilde, '' | replace_first:maintopic,''  | replace:'~','' }}{%endcapture%}
+{% if subtopic == '' %}
+    {% assign subtopic = 'index' %}
+{% endif %}
+
+{% if lang == 'en' %}
+	{% assign lang0 = 0 %}
+	{% assign lang1 = 1 %}
+{% else %}
+	{% assign lang0 = 1 %}
+	{% assign lang1 = 2 %}
+{% endif %}
+    
+<!-- Different versions of jekyll gives topics variable differently -->
+{% if page.topics != null %}
+	{% assign topics = page.topics %}
+{% else %}
+	{% assign topics = layout.topics %}
+{% endif %}
+
+
+<!-- start header -->
+<!--   page.pageurl "{{page.pageurl}}"-->
+<!--   page.url "{{page.url}}"-->
+<!--   tilde "{{tilde}}"-->
+<!--   arr "{{arr}}"-->
+<!--   lang "{{lang}}"-->
+<!--   langTilde "{{langTilde}}"-->
+<!--   maintopic {{maintopic}}-->
+<!--   subtopic {{subtopic}}-->
+
+<!--   topics {{topics}}-->
+    
+<!--
+Test array:
+    <ul>
+	{% for topic in topics %}
+		<li> {{topic.topic[0]}} : {{topic.topic[1]}} , {{topic.topic[2]}} </li>
+		<ul>
+			{% for sec in topic.secs %}
+				<li> {{sec.sec[0]}} , {{sec.sec[1]}} </li>
+				<ul>
+					{% for sub in sec.subs %}
+						<li> {{sub[0]}} : {{sub[1]}} , {{sub[2]}} </li>
+					{% endfor %}
+				</ul>
+			{% endfor %}
+		</ul>
+		<br/>
+	{% endfor %}
+	</ul>
+-->
+
+
+
+<!DOCTYPE html>
+<!--
+Template Name: Gomag
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+-->
+<html lang="">
+<head>
+<title>Paranjothi ThirdEye Meditation - பரஞ்சோதி நெற்றிக்கண் தியானம்</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="/layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+
+    {% if page.include_pic_scripts != null %}
+    <!--    Include Gallery scripts here if needed -->
+    {% endif %}
+</head>
+
+<body id="top">
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- Top Background Image Wrapper -->
+<div class="bgded" style="background-color:lightgray; background-image:url('/images/top_bgs/{{maintopic}}.jpg');"> 
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html"><img src="/images/home/Logo-Oval.png"> <div style="display: inline-block;vertical-align: middle;">Paranjothi ThirdEye Meditation <br/>
+            பரஞ்சோதி நெற்றிக்கண் தியானம்</div> </a></h1>
+      </div>
+      <div id="lang" class="fl_right">
+          <a href="{{base}}/en/{{maintopic}}/{{subtopic}}.html">
+              {% if lang == 'en' %}
+                <i class="fa fa-check-circle-o"></i> 
+              {% else %}
+                <i class="fa fa-circle-thin"></i> 
+              {% endif %}
+              English
+          </a>
+            <div class="inline-space"></div>
+          <a href="{{base}}/ta/{{maintopic}}/{{subtopic}}.html">
+              {% if lang == 'ta' %}
+                <i class="fa fa-check-circle-o"></i> 
+              {% else %}
+                <i class="fa fa-circle-thin"></i> 
+              {% endif %}
+              தமிழ்
+          </a>            
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+			{% for topic in topics %}
+				{% if topic.topic[0] == maintopic %}
+				    {% assign secs = topic.secs %}
+				    {% assign maintopicName = topic.topic[lang1] %}
+                    {% for sec in topic.secs %}
+                        {% for sub in sec.subs %}
+                            {% if sub[0] == subtopic %}
+                                {% assign subtopicName = sub[lang1] %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+				{% endif %}
+                {% assign subMenuCount = 0 %}
+                {% for sec in topic.secs %}
+                    {% for sub in sec.subs %}
+                        {% assign subMenuCount = subMenuCount | plus:1 %}   
+                    {% endfor %}
+                {% endfor %}
+                <li class="{% if topic.topic[0] == maintopic %} active {% endif %} {{subMenuCount}} {% if subMenuCount > 1 %} drop {% endif %} ">
+                    <a href="{{base}}/{{lang}}/{{topic.topic[0]}}/index.html">{{topic.topic[lang1]}}</a>
+                    {% if subMenuCount > 1 %}
+                        <ul>
+                            {% for sec in topic.secs %}
+                                {% for link in sec.subs %}
+                            <li><a href="{{base}}/{{lang}}/{{topic.topic[0]}}/{{link[0]}}.html">{{link[lang1]}}</a></li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+			{% endfor %}
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+  <!-- ################################################################################################ -->
+    
+{% if maintopic == 'home' %}
+
+  <section id="pageintro" class="hoc clear">
+    <div> 
+      <!-- ################################################################################################ -->
+    {% if lang == 'en' %}
+      <h2 class="heading">Awaken your Third Eye<br>
+        <strong>Get Initiation from anywhere</strong></h2>
+      <p>From anywhere around the world, you can get your Third Eye Awakening Initiation from <a href=""><strong>Paranjothi Govind.</strong></a></p>
+      <footer>
+        <ul class="nospace inline pushright">
+          <li><a class="btn" href="#">Register</a></li>
+          <li><a class="btn inverse" href="#">Learn More</a></li>
+        </ul>
+      </footer>
+    {% else %}    
+      <h2 class="heading">நெற்றிக்கண்ணை எழுப்புங்கள்<br>
+        <strong>எங்கிருந்தும் தீட்சை பெறலாம் </strong></h2>
+      <p>உலகின் எந்த மூலையிலிருந்தும் நெற்றிக்கண் தியான தீட்சையை <a href=""><strong>பரஞ்சோதி கோவிந்த்</strong></a> அவர்களிடமிருந்து பெற்றுக்கொள்ளலாம். </p>
+      <footer>
+        <ul class="nospace inline pushright">
+          <li><a class="btn" href="#">பதிவு செய் </a></li>
+          <li><a class="btn inverse" href="#">மேலும் தகவல் </a></li>
+        </ul>
+      </footer>
+    {% endif %}
+    </div>
+  </section>
+    
+{% else %}    
+    
+  <section id="breadcrumb" class="hoc clear"> 
+    <h6 class="heading">{{maintopicName}}</h6>
+    <ul>
+    {% if lang == 'en' %}
+      <li><a href="/">Home</a></li>
+    {% else %}    
+      <li><a href="/ta/home/index.html">முகப்பு </a></li>
+    {% endif %}
+      <li><a href="/{{lang}}/{{maintopic}}/index.html">{{maintopicName}}</a></li>
+      <li><a href="#">{{subtopicName}}</a></li>
+    </ul>
+  </section>
+    
+{% endif %}
+
+  <!-- ################################################################################################ -->
+</div>
+<!-- End Top Background Image Wrapper -->
+<!-- ################################################################################################ -->
+
+{% if maintopic == 'home' %}
+
+    {{ content }}
+
+{% else %}    
+
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <main class="hoc container clear"> 
+    <!-- main body -->
+    <div class="sidebar one_quarter first"> 
+
+        {% for sec in secs %}
+          <h6>{{sec.sec[lang0]}}</h6>
+          <nav class="sdb_holder">
+            <ul>
+                {% for link in sec.subs %}
+                    <li class="{% if link[0] == subtopic %}active{% endif %}">
+                        <a href="{{base}}/{{lang}}/{{maintopic}}/{{link[0]}}.html">{{link[lang1]}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+          </nav>
+        {% endfor %}
+
+    </div>
+    
+    <div class="content three_quarter"> 
+        {{ content }}
+    </div>
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+<!-- ################################################################################################ -->
+
+{% endif %}
+
+    
+      
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row4 bgded overlay" style="background-image:url('/images/demo/backgrounds/04.png');">
+  <footer id="footer" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="one_third first">
+      <h6 class="heading">Paranjothi Third Eye</h6>
+      <p>Et posuere sit amet vulputate tempor tellus maecenas vehicula magna quis pede curabitur iaculis dui eu purus quisque est enim lobortis.</p>
+      <p class="btmspace-50">Sed sollicitudin a mi vestibulum nisi ut lectus duis quam leo consectetuer.</p>
+      <nav>
+        <ul class="nospace">
+          <li><a href="index.html"><i class="fa fa-lg fa-home"></i></a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Cookies</a></li>
+          <li><a href="#">Disclaimer</a></li>
+          <li><a href="#">Online Shop</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="one_third">
+      <h6 class="heading">Metus nam eu urna tempus</h6>
+      <ul class="nospace btmspace-30 linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+          Street Name &amp; Number, Town, Postcode/Zip
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
+        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+      </ul>
+      <ul class="faico clear">
+        <li><a class="faicon-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="faicon-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="faicon-dribble" href="#"><i class="fa fa-dribbble"></i></a></li>
+        <li><a class="faicon-linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="faicon-google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
+        <li><a class="faicon-vk" href="#"><i class="fa fa-vk"></i></a></li>
+      </ul>
+    </div>
+    <div class="one_third">
+      <h6 class="heading">Non lacus vivamus quis</h6>
+      <article><a href="#"><img class="btmspace-15" src="/images/demo/320x140.png" alt=""></a>
+        <h6 class="nospace font-x1"><a href="#">Sed congue vel gravida</a></h6>
+        <time class="font-xs block btmspace-10" datetime="2045-04-05">Thursday, 5<sup>th</sup> April 2045</time>
+        <p class="nospace">Viverra interdum quam in hac habitasse platea dictumst sed pede volutpat [&hellip;]</p>
+      </article>
+    </div>
+    <!-- ################################################################################################ -->
+  </footer>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row5">
+  <div id="copyright" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <p class="fl_left">Copyright &copy; 2016 - All Rights Reserved - <a href="#">Domain Name</a></p>
+    <p class="fl_right">Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="/layout/scripts/jquery.min.js"></script>
+<script src="/layout/scripts/jquery.backtotop.js"></script>
+<script src="/layout/scripts/jquery.mobilemenu.js"></script>
+
+
+
+<script type="text/javascript">
+	var s = document.getElementById("email");
+	if(s){
+		var domain = "gm" +"ail.com";
+		var mail  = "mai" + "lto:";
+		var at = "@";
+		s.innerHTML = "paranjothithirdeye" + at + domain;
+		s.href= mail + s.innerHTML;
+	}
+</script>	    
+</body>
+</html>
+
