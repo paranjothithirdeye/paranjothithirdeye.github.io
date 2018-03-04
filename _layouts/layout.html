@@ -176,8 +176,8 @@ Licence URI: http://www.os-templates.com/template-terms
       <p>From anywhere around the world, you can get your Third Eye Awakening Initiation from <a href=""><strong>Paranjothi Govind.</strong></a></p>
       <footer>
         <ul class="nospace inline pushright">
-          <li><a class="btn" href="#">Register</a></li>
-          <li><a class="btn inverse" href="#">Learn More</a></li>
+          <li><a class="btn" href="/en/third-eye/register.html">Register</a></li>
+          <li><a class="btn inverse" href="/en/third-eye/index.html">Learn More</a></li>
         </ul>
       </footer>
     {% else %}    
@@ -186,8 +186,8 @@ Licence URI: http://www.os-templates.com/template-terms
       <p>உலகின் எந்த மூலையிலிருந்தும் நெற்றிக்கண் தியான தீட்சையை <a href=""><strong>பரஞ்சோதி கோவிந்த்</strong></a> அவர்களிடமிருந்து பெற்றுக்கொள்ளலாம். </p>
       <footer>
         <ul class="nospace inline pushright">
-          <li><a class="btn" href="#">பதிவு செய் </a></li>
-          <li><a class="btn inverse" href="#">மேலும் தகவல் </a></li>
+          <li><a class="btn" href="/ta/third-eye/register.html">பதிவு செய் </a></li>
+          <li><a class="btn inverse" href="/ta/third-eye/index.html">மேலும் தகவல் </a></li>
         </ul>
       </footer>
     {% endif %}
@@ -262,35 +262,53 @@ Licence URI: http://www.os-templates.com/template-terms
   <footer id="footer" class="hoc clear"> 
     <!-- ################################################################################################ -->
     <div class="one_third first">
-      <h6 class="heading">Paranjothi Third Eye</h6>
-      <p>Et posuere sit amet vulputate tempor tellus maecenas vehicula magna quis pede curabitur iaculis dui eu purus quisque est enim lobortis.</p>
-      <p class="btmspace-50">Sed sollicitudin a mi vestibulum nisi ut lectus duis quam leo consectetuer.</p>
+    {% if lang == 'en' %}
+        <h6 class="heading">Paranjothi Third Eye</h6>
+        <p>Awaken Your Third Eye</p>
+        <p>Get Initiation From Anywhere</p>
+        <p>From anywhere around the world, you can get your Third Eye Awakening Initiation from <strong>Paranjothi Govind</strong>.</p>
+    {% else %}
+        <h6 class="heading">பரஞ்சோதி நெற்றிக்கண் தியானம்</h6>
+        <p>நெற்றிக்கண்ணை எழுப்புங்கள்</p>
+        <p>எங்கிருந்தும் தீட்சை பெறலாம் </p>
+        <p>உலகின் எந்த மூலையிலிருந்தும் நெற்றிக்கண் தியான தீட்சையை <strong>பரஞ்சோதி கோவிந்த்</strong> அவர்களிடமிருந்து பெற்றுக்கொள்ளலாம்.</p>
+    {% endif %}
+
       <nav>
         <ul class="nospace">
-          <li><a href="index.html"><i class="fa fa-lg fa-home"></i></a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Cookies</a></li>
-          <li><a href="#">Disclaimer</a></li>
-          <li><a href="#">Online Shop</a></li>
-          <li><a href="#">Sitemap</a></li>
+			{% for topic in topics %}
+                <li >
+                    <a href="{{base}}/{{lang}}/{{topic.topic[0]}}/index.html">
+                        {% if topic.topic[0] == 'home' %}
+                        <i class="fa fa-lg fa-home"></i>
+                        {% endif %}
+                        {{topic.topic[lang1]}}
+                    </a>
+                </li>
+			{% endfor %}
         </ul>
       </nav>
+
+      
     </div>
     <div class="one_third">
-      <h6 class="heading">Metus nam eu urna tempus</h6>
+    {% if lang == 'en' %}
+      <h6 class="heading">Contact</h6>
+    {% else %}
+      <h6 class="heading">தொடர்பு கொள்க</h6>
+    {% endif %}
       <ul class="nospace btmspace-30 linklist contact">
+<!--
         <li><i class="fa fa-map-marker"></i>
           <address>
-          Street Name &amp; Number, Town, Postcode/Zip
+          Chennai, Tamilnadu, India.
           </address>
         </li>
-        <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-        <li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
-        <li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+-->
+        <li><i class="fa fa-phone"></i> +91 70921 36531</li>
+        <li><i class="fa fa-envelope-o"></i> <a class="email"></a></li>
       </ul>
+<!--
       <ul class="faico clear">
         <li><a class="faicon-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
         <li><a class="faicon-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -299,7 +317,9 @@ Licence URI: http://www.os-templates.com/template-terms
         <li><a class="faicon-google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
         <li><a class="faicon-vk" href="#"><i class="fa fa-vk"></i></a></li>
       </ul>
+-->
     </div>
+<!--
     <div class="one_third">
       <h6 class="heading">Non lacus vivamus quis</h6>
       <article><a href="#"><img class="btmspace-15" src="/images/demo/320x140.png" alt=""></a>
@@ -308,6 +328,7 @@ Licence URI: http://www.os-templates.com/template-terms
         <p class="nospace">Viverra interdum quam in hac habitasse platea dictumst sed pede volutpat [&hellip;]</p>
       </article>
     </div>
+-->
     <!-- ################################################################################################ -->
   </footer>
 </div>
@@ -317,8 +338,7 @@ Licence URI: http://www.os-templates.com/template-terms
 <div class="wrapper row5">
   <div id="copyright" class="hoc clear"> 
     <!-- ################################################################################################ -->
-    <p class="fl_left">Copyright &copy; 2016 - All Rights Reserved - <a href="#">Domain Name</a></p>
-    <p class="fl_right">Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Paranjothi Third Eye</a></p>
     <!-- ################################################################################################ -->
   </div>
 </div>
@@ -334,14 +354,25 @@ Licence URI: http://www.os-templates.com/template-terms
 
 
 <script type="text/javascript">
-	var s = document.getElementById("email");
-	if(s){
-		var domain = "gm" +"ail.com";
-		var mail  = "mai" + "lto:";
-		var at = "@";
-		s.innerHTML = "paranjothithirdeye" + at + domain;
-		s.href= mail + s.innerHTML;
-	}
+    $(function(){
+       $(".email").each(function(i,e){
+            var domain = "gm" +"ail.com";
+            var mail  = "mai" + "lto:";
+            var at = "@";
+            var innerHTML = "paranjothithirdeye" + at + domain;
+           $(e).attr("href",mail+innerHTML);
+           $(e).html(innerHTML);
+       });; 
+    });
+    
+//	var s = document.getElementById("email");
+//	if(s){
+//		var domain = "gm" +"ail.com";
+//		var mail  = "mai" + "lto:";
+//		var at = "@";
+//		s.innerHTML = "paranjothithirdeye" + at + domain;
+//		s.href= mail + s.innerHTML;
+//	}
 </script>	    
 </body>
 </html>
